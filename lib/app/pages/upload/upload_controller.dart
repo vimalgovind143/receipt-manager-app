@@ -74,6 +74,9 @@ class UploadController extends Controller {
     super.onDisposed();
   }
 
+  /// Sends the receipt image to the external server for processing.
+  /// This method constructs a multipart form data request to the /api/upload endpoint.
+  /// The URL and parameters are dynamically configured based on the app's settings.
   Future<InsertReceiptHolder?> send(File image) async {
     try {
       await FlutterUploader().enqueue(
