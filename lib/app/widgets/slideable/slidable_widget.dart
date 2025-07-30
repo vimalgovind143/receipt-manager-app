@@ -16,7 +16,6 @@
  */
 
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -44,7 +43,7 @@ class SlidableHistoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String dateString = DateFormat.yMMMd().format(holder.receipt.date);
-    String categoryString = dateString + ", " + holder.categorie.categoryName;
+    String categoryString = dateString + ", " + holder.category.categoryName;
     String tagString = holder.tag.tagName;
     String subTitle = categoryString;
 
@@ -55,21 +54,25 @@ class SlidableHistoryWidget extends StatelessWidget {
         holder.receipt.total.toStringAsFixed(2) + holder.receipt.currency;
 
     return Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        closeOnScroll: true,
-        secondaryActions: <Widget>[
-          IconSlideAction(
-            caption: deleteText,
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: deleteMethod,
-          ),
-          IconSlideAction(
-              onTap: editMethod,
-              caption: editText,
+        endActionPane: ActionPane(
+          motion: const DrawerMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (context) => deleteMethod(),
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+              label: deleteText,
+            ),
+            SlidableAction(
+              onPressed: (context) => editMethod(),
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
               icon: Icons.update,
-              color: Colors.black),
-        ],
+              label: editText,
+            ),
+          ],
+        ),
         child: Card(
             shadowColor: Colors.black,
             elevation: 2,

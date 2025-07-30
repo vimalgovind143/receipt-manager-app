@@ -73,43 +73,38 @@ class SimpleTextFieldWidget extends StatelessWidget {
     if (readOnly || getSuggestionList == null)
       return defaultTextField();
     else {
-      return TypeAheadFormField(
-        textFieldConfiguration: TextFieldConfiguration(
-          maxLines: 1,
-          onTap: this.onTap,
-          controller: controller,
-          inputFormatters: this.inputFormatters,
-          style: TextStyle(color: Colors.black),
-          decoration: new InputDecoration(
-            border: new OutlineInputBorder(
-                borderSide: new BorderSide(color: Colors.grey[100]!)),
-            hintText: hintText,
-            helperText: helperText,
-            prefixIcon: icon,
-            prefixText: ' ',
-          ),
-        ),
-        hideOnEmpty: true,
-        getImmediateSuggestions: true,
-        hideSuggestionsOnKeyboardHide: true,
-        suggestionsBoxDecoration: SuggestionsBoxDecoration(elevation: 0.0),
+      return TypeAheadField<String>(
+        controller: controller,
+        builder: (context, controller, focusNode) {
+          return TextFormField(
+            controller: controller,
+            focusNode: focusNode,
+            maxLines: 1,
+            onTap: this.onTap,
+            inputFormatters: this.inputFormatters,
+            style: TextStyle(color: Colors.black),
+            decoration: new InputDecoration(
+              border: new OutlineInputBorder(
+                  borderSide: new BorderSide(color: Colors.grey[100]!)),
+              hintText: hintText,
+              helperText: helperText,
+              prefixIcon: icon,
+              prefixText: ' ',
+            ),
+            validator: (value) => validator(value),
+          );
+        },
         suggestionsCallback: (pattern) async {
           return await getSuggestionList!(pattern);
         },
         itemBuilder: (context, suggestion) {
-          return Ink(
-              color: Colors.white,
-              child: ListTile(
-                title: Text(suggestion as String),
-              ));
+          return ListTile(
+            title: Text(suggestion),
+          );
         },
-        transitionBuilder: (context, suggestionsBox, controller) {
-          return suggestionsBox;
+        onSelected: (suggestion) {
+          this.controller.text = suggestion;
         },
-        onSuggestionSelected: (suggestion) {
-          this.controller.text = suggestion as String;
-        },
-        validator: (value) => validator(value),
       );
     }
   }

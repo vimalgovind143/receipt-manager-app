@@ -28,7 +28,7 @@ class ScrollWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          SchedulerBinding.instance!.addPostFrameCallback((_) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
             controller.jumpTo(controller.position.maxScrollExtent);
           });
         },

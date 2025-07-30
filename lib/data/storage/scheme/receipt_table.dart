@@ -15,13 +15,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:drift/drift.dart';
+import 'package:receipt_manager/data/storage/scheme/category_table.dart';
+import 'package:receipt_manager/data/storage/scheme/store_table.dart';
+import 'package:receipt_manager/data/storage/scheme/tag_table.dart';
 
 class Receipts extends Table {
   IntColumn get id => integer().autoIncrement()();
 
-  IntColumn get storeId =>
-      integer().customConstraint('NOT NULL REFERENCES stores(id)')();
+  IntColumn get storeId => integer().references(Stores, #id)();
 
   DateTimeColumn get date => dateTime()();
 
@@ -29,9 +31,7 @@ class Receipts extends Table {
 
   TextColumn get currency => text()();
 
-  IntColumn get tagId =>
-      integer().nullable().customConstraint('REFERENCES tags(id)')();
+  IntColumn get tagId => integer().nullable().references(Tags, #id)();
 
-  IntColumn get categoryId =>
-      integer().customConstraint('NOT NULL REFERENCES categories(id)')();
+  IntColumn get categoryId => integer().references(Categories, #id)();
 }

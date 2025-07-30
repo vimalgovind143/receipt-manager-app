@@ -4,58 +4,58 @@ description: Receipt Manager
 version: 1.1.7+610
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  flutter_card_swipper: ^0.4.0
-  flutter_clean_architecture: ^5.0.0
-  injectable: ^1.2.2
-  http: ^0.13.1
-  path_provider: ^2.0.1
-  path: ^1.8.0
+  card_swiper: ^3.0.1
+  flutter_clean_architecture: ^6.0.2
+  injectable: ^2.3.0
+  http: ^1.1.0
+  path_provider: ^2.1.1
+  path: ^1.8.3
 
-  equatable: ^2.0.0
-  flutter_slidable: ^0.6.0
-  cupertino_icons: ^1.0.0
-  settings_ui: ^1.0.0-nullsafety.2
-  permission_handler: ^7.1.0
+  equatable: ^2.0.5
+  flutter_slidable: ^4.0.0
+  cupertino_icons: ^1.0.6
+  settings_ui: ^2.0.2
+  permission_handler: ^12.0.1
 
-  hive: ^2.0.2
-  hive_flutter: ^1.0.0
-  flutter_staggered_animations: ^1.0.0
-  currency_picker: ^2.0.3
-  intl: ^0.17.0
-  flutter_neumorphic: ^3.1.0
-  flutter_multi_formatter: ^2.0.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  flutter_staggered_animations: ^1.1.1
+  currency_picker: ^2.0.20
+  intl: ^0.20.2
+  flutter_neumorphic: ^3.2.0
+  flutter_multi_formatter: ^2.12.0
 
-  flutter_bloc: ^7.0.0-nullsafety.2
-  moor_flutter: ^4.0.0
-  animated_stack: ^0.2.0
-  syncfusion_flutter_charts: ^19.1.58
+  flutter_bloc: ^9.1.1
+  drift: ^2.11.0
+  sqlite3_flutter_libs: ^0.5.18
+  animated_stack: ^0.3.3
+  syncfusion_flutter_charts: ^30.1.42
 
-  image_picker: ^0.7.4
-  flutter_typeahead: ^3.1.1
-  file_picker: ^3.0.1
+  image_picker: ^1.0.4
+  flutter_typeahead: ^5.2.0
+  file_picker: ^10.2.0
 
-  flutter_uploader: any
-  flutter_local_notifications: any
-  gallery_saver: any
+  flutter_uploader: ^3.0.0-beta.4
+  flutter_local_notifications: ^19.4.0
+  saver_gallery: ^4.0.0
 
+  flutter_localizations:
+    sdk: flutter
 dev_dependencies:
+  flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
 
-  build_runner: any
-  moor_generator: any
+  build_runner: ^2.4.6
+  drift_dev: ^2.11.0
 
-  flutter_native_splash: ^1.1.7+1
-
-  # Localisation
-  flutter_localizations:
-    sdk: flutter
+  flutter_native_splash: ^2.3.5
 
 flutter:
   generate: true

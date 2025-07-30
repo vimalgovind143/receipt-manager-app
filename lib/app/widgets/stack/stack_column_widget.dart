@@ -21,25 +21,28 @@ import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
 
 class StackColumnWidget extends StatelessWidget {
+  final HomeController controller;
+
+  StackColumnWidget({required this.controller});
+
   @override
-  Widget build(BuildContext context) =>
-      ControlledWidgetBuilder<HomeController>(builder: (context, controller) {
-        return Column(
-          children: <Widget>[
-            SizedBox(height: 20),
-            IconTile(
-                width: 60,
-                height: 60,
-                iconData: Icons.filter,
-                fun: controller.galleryPicker),
-            SizedBox(height: 20),
-            IconTile(
-              width: 60,
-              height: 60,
-              iconData: Icons.camera_alt,
-              fun: controller.cameraPicker,
-            ),
-          ],
-        );
-      });
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 20),
+        IconTile(
+            width: 60,
+            height: 60,
+            iconData: Icons.filter,
+            fun: controller.galleryPicker),
+        SizedBox(height: 20),
+        IconTile(
+          width: 60,
+          height: 60,
+          iconData: Icons.camera_alt,
+          fun: controller.cameraPicker,
+        ),
+      ],
+    );
+  }
 }

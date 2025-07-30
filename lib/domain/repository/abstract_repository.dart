@@ -34,5 +34,5 @@ abstract class ReceiptRepository {
 
   Future<List<Tag>> getTagNames();
 
-  Future<List<Categorie>> getCategoryNames();
+  Future<List<Category>> getCategoryNames();
 }

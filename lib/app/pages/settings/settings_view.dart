@@ -23,83 +23,90 @@ import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-class SettingsPage extends View {
+class SettingsPage extends StatefulWidget {
+  SettingsPage({Key? key}) : super(key: key);
+
   @override
   _SettingsState createState() => _SettingsState();
 }
 
-class _SettingsState extends ViewState<SettingsPage, SettingsController> {
-  _SettingsState() : super(SettingsController());
+class _SettingsState extends State<SettingsPage> {
+  late SettingsController controller;
 
   @override
-  Widget get view => Material(
-      color: Colors.white,
-      child: ControlledWidgetBuilder<SettingsController>(
-          builder: (context, controller) => Scaffold(
-              backgroundColor: Colors.white,
-              appBar: NeumorphicAppBar(title: Text(S.of(context).settings)),
-              key: globalKey,
-              body: PaddingWidget(
-                  widget: SettingsList(
-                backgroundColor: Colors.white,
-                shrinkWrap: true,
+  void initState() {
+    super.initState();
+    controller = SettingsController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Colors.white,
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: NeumorphicAppBar(title: Text(S.of(context).settings)),
+            body: PaddingWidget(
+                widget: SettingsList(
+              shrinkWrap: true,
                 sections: [
-                  SettingsSection(title: S.of(context).networkSettings, tiles: [
+                  SettingsSection(title: Text(S.of(context).networkSettings), tiles: [
                     SettingsTile(
-                        title: S.of(context).serverSettings,
+                        title: Text(S.of(context).serverSettings),
                         leading: Icon(Icons.wifi),
                         onPressed: (context) =>
                             controller.serverButtonPress(context)),
                     SettingsTile(
-                        title: S.of(context).apiToken,
+                        title: Text(S.of(context).apiToken),
                         leading: Icon(Icons.vpn_key),
                         onPressed: controller.apiTokenButtonPress),
                     SettingsTile.switchTile(
-                        title: "HTTPS",
+                        initialValue: controller.https,
+                        title: Text("HTTPS"),
                         leading: Icon(Icons.lock),
-                        switchValue: controller.https,
                         onToggle: (bool value) => controller.toggleHttps(value))
                   ]),
                   SettingsSection(
-                    title: S.of(context).cameraSettings,
+                    title: Text(S.of(context).cameraSettings),
                     tiles: [
                       SettingsTile.switchTile(
-                          title: S.of(context).rotateImage,
+                          initialValue: controller.rotateImage,
+                          title: Text(S.of(context).rotateImage),
                           leading: Icon(Icons.rotate_right_sharp),
-                          switchValue: controller.rotateImage,
                           onToggle: (bool value) =>
                               controller.toggleRotateImage(value)),
                       SettingsTile.switchTile(
-                          title: S.of(context).grayscaleImage,
+                          initialValue: controller.grayscaleImage,
+                          title: Text(S.of(context).grayscaleImage),
                           leading: Icon(Icons.wb_incandescent_outlined),
-                          switchValue: controller.grayscaleImage,
                           onToggle: (bool value) =>
                               controller.toggleGrayscaleImage(value)),
                       SettingsTile.switchTile(
-                          title: S.of(context).gaussianBlur,
+                          initialValue: controller.gaussianBlur,
+                          title: Text(S.of(context).gaussianBlur),
                           leading: Icon(Icons.blur_on_outlined),
-                          switchValue: controller.gaussianBlur,
                           onToggle: (bool value) =>
                               controller.toggleGaussianBlur(value))
                     ],
                   ),
                   SettingsSection(
-                    title: S.of(context).developerSettings,
+                    title: Text(S.of(context).developerSettings),
                     tiles: [
                       SettingsTile.switchTile(
-                          title: S.of(context).enableDebugOutput,
+                          initialValue: controller.debugOutput,
+                          title: Text(S.of(context).enableDebugOutput),
                           leading: Icon(Icons.bug_report),
-                          switchValue: controller.debugOutput,
                           onToggle: (bool value) =>
                               controller.toggleDebugOutput(value)),
                       SettingsTile.switchTile(
-                          title: S.of(context).showArticles,
+                          initialValue: controller.showArticles,
+                          title: Text(S.of(context).showArticles),
                           leading: Icon(Icons.category),
-                          switchValue: controller.showArticles,
                           onToggle: (bool value) =>
                               controller.toggleShowArticles(value)),
                     ],
                   ),
                 ],
-              )))));
+              ))));
+  }
 }

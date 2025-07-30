@@ -17,7 +17,6 @@
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:receipt_manager/generated/l10n.dart';
 
 class UserNotifier {
   static void fail(String msg, BuildContext context) {

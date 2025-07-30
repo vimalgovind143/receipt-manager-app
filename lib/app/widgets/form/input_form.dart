@@ -15,7 +15,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -26,6 +25,9 @@ import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 class InputForm extends StatelessWidget {
+  final HomeController controller;
+
+  InputForm({required this.controller});
   final ScrollController _scrollController = ScrollController();
 
   Widget storeNameTextField(BuildContext context, HomeController controller) =>
@@ -140,9 +142,6 @@ class InputForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController controller =
-        FlutterCleanArchitecture.getController<HomeController>(context);
-
     return SingleChildScrollView(
         controller: _scrollController,
         child: Form(

@@ -53,5 +53,5 @@ class DataReceiptRepository extends ReceiptRepository {
   Future<List<Tag>> getTagNames() => _dao.getTagNames();
 
   @override
-  Future<List<Categorie>> getCategoryNames() => _dao.getCategoryNames();
+  Future<List<Category>> getCategoryNames() => _dao.getCategoryNames();
 }

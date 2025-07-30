@@ -26,15 +26,21 @@ import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
-class ServerSettingsPage extends View {
+class ServerSettingsPage extends StatefulWidget {
+  ServerSettingsPage({Key? key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => ServerSettingsState();
+  State<ServerSettingsPage> createState() => ServerSettingsState();
 }
 
-class ServerSettingsState
-    extends ViewState<ServerSettingsPage, ServerSettingsController> {
-  ServerSettingsState()
-      : super(ServerSettingsController(DataReceiptRepository()));
+class ServerSettingsState extends State<ServerSettingsPage> {
+  late ServerSettingsController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = ServerSettingsController(DataReceiptRepository());
+  }
 
   Widget apiTextField(ServerSettingsController controller) => PaddingWidget(
           widget: SimpleTextFieldWidget(
@@ -61,14 +67,13 @@ class ServerSettingsState
       ));
 
   @override
-  Widget get view => Scaffold(
-      key: globalKey,
-      backgroundColor: Colors.white,
-      appBar: NeumorphicAppBar(title: Text("Server Settings")),
-      body: ControlledWidgetBuilder<ServerSettingsController>(
-          builder: (context, controller) {
-        return Form(
-            key: controller.formKey,child:Column(
-            children: [apiTextField(controller), submitButton(controller)]));
-      }));
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: NeumorphicAppBar(title: Text("Server Settings")),
+        body: Form(
+            key: controller.formKey,
+            child: Column(
+            children: [apiTextField(controller), submitButton(controller)])));
+  }
 }

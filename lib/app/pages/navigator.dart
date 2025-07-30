@@ -15,20 +15,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/pages/history/history_view.dart';
 import 'package:receipt_manager/app/pages/home/home_view.dart';
 import 'package:receipt_manager/app/pages/settings/settings_view.dart';
 import 'package:receipt_manager/app/pages/stats/stat_view.dart';
 
-class NavigatorPage extends View {
+class NavigatorPage extends StatefulWidget {
+  NavigatorPage({Key? key}) : super(key: key);
+
   @override
   NavigatorState createState() => NavigatorState();
 }
 
-class NavigatorState extends State {
+class NavigatorState extends State<NavigatorPage> {
   int currentIndex = 0;
   final List<Widget> _children = [
     HomePage(),
@@ -43,8 +45,8 @@ class NavigatorState extends State {
   Widget build(BuildContext context) {
     readSettings();
 
-    return WillPopScope(
-        onWillPop: () async => false,
+    return PopScope(
+        canPop: false,
         child: Scaffold(
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Colors.white,

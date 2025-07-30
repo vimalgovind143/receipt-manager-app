@@ -28,20 +28,23 @@ import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 // ignore: must_be_immutable
-class ImageUploadPage extends View {
+class ImageUploadPage extends StatefulWidget {
   File image;
 
-  ImageUploadPage(this.image);
+  ImageUploadPage(this.image, {Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => ImageUploadState(image);
+  State<ImageUploadPage> createState() => ImageUploadState();
 }
 
-class ImageUploadState extends ViewState<ImageUploadPage, UploadController> {
-  File image;
+class ImageUploadState extends State<ImageUploadPage> {
+  late UploadController controller;
 
-  ImageUploadState(this.image)
-      : super(UploadController(DataReceiptRepository()));
+  @override
+  void initState() {
+    super.initState();
+    controller = UploadController(DataReceiptRepository());
+  }
 
   Widget submitButton(UploadController controller) => PaddingWidget(
       padding: 32.0,
@@ -53,24 +56,22 @@ class ImageUploadState extends ViewState<ImageUploadPage, UploadController> {
               color: Colors.green,
               boxShape: NeumorphicBoxShape.stadium(),
             ),
-            onPressed: () => controller.sendReceipt(image),
+            onPressed: () => controller.sendReceipt(widget.image),
             child: Text(S.of(context).upload,
                 style: TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold))),
       ));
 
   @override
-  Widget get view => Scaffold(
-      key: globalKey,
-      backgroundColor: Colors.white,
-      appBar: NeumorphicAppBar(title: Text(S.of(context).showImage)),
-      body: ControlledWidgetBuilder<UploadController>(
-          builder: (context, controller) {
-        return Container(
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: NeumorphicAppBar(title: Text(S.of(context).showImage)),
+        body: Container(
             height: double.infinity,
             decoration: new BoxDecoration(
                 image: new DecorationImage(
-              image: new FileImage(image),
+              image: new FileImage(widget.image),
               fit: BoxFit.cover,
             )),
             child: Stack(alignment: Alignment.bottomCenter, children: [
@@ -79,6 +80,6 @@ class ImageUploadState extends ViewState<ImageUploadPage, UploadController> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[submitButton(controller)]),
-            ]));
-      }));
+            ])));
+  }
 }

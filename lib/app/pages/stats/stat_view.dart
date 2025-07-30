@@ -17,7 +17,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_card_swipper/flutter_card_swiper.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
@@ -32,18 +32,26 @@ import 'package:receipt_manager/generated/l10n.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class StatsPage extends View {
+class StatsPage extends StatefulWidget {
+  StatsPage({Key? key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => StatsState();
+  State<StatsPage> createState() => StatsState();
 }
 
-class StatsState extends ViewState<StatsPage, StatsController> {
-  StatsState() : super(StatsController(DataReceiptRepository()));
+class StatsState extends State<StatsPage> {
+  late StatsController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = StatsController(DataReceiptRepository());
+  }
   TooltipBehavior monthToolTip = TooltipBehavior(enable: true);
   TooltipBehavior weekToolTip = TooltipBehavior(enable: true);
   TooltipBehavior categoryToolTip = TooltipBehavior(enable: true);
 
-  Widget getMonthChart(List<ReceiptHolder> receipts) {
+  Widget getMonthChart(BuildContext context, List<ReceiptHolder> receipts) {
     MonthlyOverview overview = MonthlyOverview(receipts);
     List<ReceiptMonthData> data = overview.getData();
 
@@ -51,7 +59,7 @@ class StatsState extends ViewState<StatsPage, StatsController> {
     return SfCartesianChart(
         primaryXAxis: CategoryAxis(),
         tooltipBehavior: monthToolTip,
-        series: <ChartSeries>[
+        series: <CartesianSeries<ReceiptMonthData, String>>[
           LineSeries<ReceiptMonthData, String>(
               name: S.of(context).monthlyTotal,
               color: Colors.red,
@@ -62,7 +70,7 @@ class StatsState extends ViewState<StatsPage, StatsController> {
         ]);
   }
 
-  Widget getWeeklyChart(List<ReceiptHolder> receipts) {
+  Widget getWeeklyChart(BuildContext context, List<ReceiptHolder> receipts) {
     WeeklyOverview overview = WeeklyOverview(receipts);
     List<WeeklyChartData> data = overview.getData();
     int year = DateTime.now().year;
@@ -70,7 +78,7 @@ class StatsState extends ViewState<StatsPage, StatsController> {
     return SfCartesianChart(
         primaryXAxis: CategoryAxis(),
         tooltipBehavior: weekToolTip,
-        series: <ChartSeries>[
+        series: <CartesianSeries<WeeklyChartData, String>>[
           ColumnSeries<WeeklyChartData, String>(
               color: Colors.red,
               name: S.of(context).weeklyTotal,
@@ -83,7 +91,7 @@ class StatsState extends ViewState<StatsPage, StatsController> {
         ]);
   }
 
-  Widget getCategoryChart(List<ReceiptHolder> receipts) {
+  Widget getCategoryChart(BuildContext context, List<ReceiptHolder> receipts) {
     CategoryOverview overview = CategoryOverview(receipts);
     List<CategoryData> data = overview.getData();
 
@@ -101,32 +109,30 @@ class StatsState extends ViewState<StatsPage, StatsController> {
         ]);
   }
 
-  Widget getYearOverview(List<ReceiptHolder> receipts) {
+  Widget getYearOverview(BuildContext context, List<ReceiptHolder> receipts) {
     return StatsCard(S.of(context).annualOverview,
-        S.of(context).expensesOverview, getMonthChart(receipts));
+        S.of(context).expensesOverview, getMonthChart(context, receipts));
   }
 
-  Widget getWeeklyOverview(List<ReceiptHolder> receipts) {
+  Widget getWeeklyOverview(BuildContext context, List<ReceiptHolder> receipts) {
     return StatsCard(S.of(context).weeklyOverview,
-        S.of(context).expensesOverview, getWeeklyChart(receipts));
+        S.of(context).expensesOverview, getWeeklyChart(context, receipts));
   }
 
-  Widget getCategoryOverview(List<ReceiptHolder> receipts) {
+  Widget getCategoryOverview(BuildContext context, List<ReceiptHolder> receipts) {
     return StatsCard(S.of(context).categoryOverview,
-        S.of(context).expensesOverview, getCategoryChart(receipts));
+        S.of(context).expensesOverview, getCategoryChart(context, receipts));
   }
 
   @override
-  Widget get view => Material(
-      child: Scaffold(
-          key: globalKey,
-          backgroundColor: Colors.white,
-          appBar: NeumorphicAppBar(
-            title: Text(S.of(context).analytics),
-          ),
-          body: ControlledWidgetBuilder<StatsController>(
-              builder: (context, controller) {
-            return StreamBuilder<List<ReceiptHolder>>(
+  Widget build(BuildContext context) {
+    return Material(
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: NeumorphicAppBar(
+              title: Text(S.of(context).analytics),
+            ),
+            body: StreamBuilder<List<ReceiptHolder>>(
                 stream: controller.receipts,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -135,9 +141,9 @@ class StatsState extends ViewState<StatsPage, StatsController> {
 
                   final receipts = snapshot.data ?? [];
                   List<Widget> widgets = [
-                    getYearOverview(receipts),
-                    getWeeklyOverview(receipts),
-                    getCategoryOverview(receipts)
+                    getYearOverview(context, receipts),
+                    getWeeklyOverview(context, receipts),
+                    getCategoryOverview(context, receipts)
                   ];
 
                   return Swiper(
@@ -150,8 +156,8 @@ class StatsState extends ViewState<StatsPage, StatsController> {
                     pagination:
                         SwiperPagination(builder: SwiperPagination.dots),
                   );
-                });
-          })));
+                })));
+  }
 }
 
 class CategoryData {

@@ -28,19 +28,23 @@ import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 // ignore: must_be_immutable
-class FileUploadPage extends View {
+class FileUploadPage extends StatefulWidget {
   PlatformFile file;
 
-  FileUploadPage(this.file);
+  FileUploadPage(this.file, {Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => FileUploadState(this.file);
+  State<FileUploadPage> createState() => FileUploadState();
 }
 
-class FileUploadState extends ViewState<FileUploadPage, UploadController> {
-  PlatformFile file;
+class FileUploadState extends State<FileUploadPage> {
+  late UploadController controller;
 
-  FileUploadState(this.file) : super(UploadController(DataReceiptRepository()));
+  @override
+  void initState() {
+    super.initState();
+    controller = UploadController(DataReceiptRepository());
+  }
 
   Widget submitButton(UploadController controller) => PaddingWidget(
           widget: Align(
@@ -55,12 +59,10 @@ class FileUploadState extends ViewState<FileUploadPage, UploadController> {
       ));
 
   @override
-  Widget get view => Scaffold(
-      key: globalKey,
-      backgroundColor: Colors.white,
-      appBar: NeumorphicAppBar(title: Text(S.of(context).showImage)),
-      body: ControlledWidgetBuilder<UploadController>(
-          builder: (context, controller) {
-        return Column(children: [submitButton(controller)]);
-      }));
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: NeumorphicAppBar(title: Text(S.of(context).showImage)),
+        body: Column(children: [submitButton(controller)]));
+  }
 }

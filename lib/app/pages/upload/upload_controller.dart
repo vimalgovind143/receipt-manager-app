@@ -91,6 +91,7 @@ class UploadController extends Controller {
     FlutterUploader().progress.listen((progress) async {
       if (progress.progress! > 0) UserNotifier.progress(progress.progress!);
     });
+    return null;
   }
 
   bool validArguments() {

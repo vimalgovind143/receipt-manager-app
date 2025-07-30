@@ -26,13 +26,21 @@ import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
-class ApiTokenPage extends View {
+class ApiTokenPage extends StatefulWidget {
+  ApiTokenPage({Key? key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => ApiTokenState();
+  State<ApiTokenPage> createState() => ApiTokenState();
 }
 
-class ApiTokenState extends ViewState<ApiTokenPage, ApiTokenController> {
-  ApiTokenState() : super(ApiTokenController(DataReceiptRepository()));
+class ApiTokenState extends State<ApiTokenPage> {
+  late ApiTokenController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = ApiTokenController(DataReceiptRepository());
+  }
 
   Widget apiTextField(ApiTokenController controller) => PaddingWidget(
           widget: SimpleTextFieldWidget(
@@ -59,17 +67,15 @@ class ApiTokenState extends ViewState<ApiTokenPage, ApiTokenController> {
       ));
 
   @override
-  Widget get view => Scaffold(
-      key: globalKey,
-      backgroundColor: Colors.white,
-      appBar: NeumorphicAppBar(title: Text("Api Token Settings")),
-      body: ControlledWidgetBuilder<ApiTokenController>(
-          builder: (context, controller) {
-        return Form(
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: NeumorphicAppBar(title: Text("Api Token Settings")),
+        body: Form(
             key: controller.formKey,
             child: Column(children: [
               apiTextField(controller),
               submitButton(controller)
-            ]));
-      }));
+            ])));
+  }
 }

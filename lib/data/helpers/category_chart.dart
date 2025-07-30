@@ -29,23 +29,23 @@ class CategoryOverview {
 
     for (ReceiptHolder holder in receipts) {
       final Receipt receipt = holder.receipt;
-      final Categorie categorie = holder.categorie;
+      final Category category = holder.category;
       if (receipt.date.year != DateTime.now().year) continue;
 
       if (chartData.isEmpty) {
-        chartData.add(CategoryData(categorie.categoryName, receipt.total));
+        chartData.add(CategoryData(category.categoryName, receipt.total));
       } else {
         List<CategoryData>? list = chartData
-            .where((element) => element.label == categorie.categoryName)
+            .where((element) => element.label == category.categoryName)
             .toList();
 
         if (list.isEmpty) {
-          chartData.add(CategoryData(categorie.categoryName, receipt.total));
+          chartData.add(CategoryData(category.categoryName, receipt.total));
         } else {
           int pos = chartData.indexOf(list.first);
 
           chartData[pos] = CategoryData(
-              categorie.categoryName, chartData[pos].total + receipt.total);
+              category.categoryName, chartData[pos].total + receipt.total);
         }
       }
     }

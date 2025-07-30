@@ -19,7 +19,6 @@ import 'dart:async';
 import 'dart:io';
 
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -29,12 +28,11 @@ import 'package:receipt_manager/app/pages/navigator.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  FlutterCleanArchitecture.debugModeOn();
-  Directory directory = await pathProvider.getApplicationDocumentsDirectory();
-  Hive.init(directory.path);
-
   return runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    FlutterCleanArchitecture.debugModeOn();
+    Directory directory = await pathProvider.getApplicationDocumentsDirectory();
+    Hive.init(directory.path);
     runApp(ReceiptManagerApp());
   }, (error, stack) {
     print(stack);

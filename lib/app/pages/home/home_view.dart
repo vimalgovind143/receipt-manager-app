@@ -25,27 +25,37 @@ import 'package:receipt_manager/app/widgets/stack/stack_column_widget.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
-class HomePage extends View {
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends ViewState<HomePage, HomeController> {
-  _HomePageState() : super(HomeController(DataReceiptRepository()));
+class _HomePageState extends State<HomePage> {
+  late HomeController controller;
 
   @override
-  Widget get view => Material(
-      child: AnimatedStack(
-          backgroundColor: Colors.transparent,
-          fabBackgroundColor: Colors.red,
-          buttonIcon: Icons.workspaces_filled,
-          fabIconColor: Colors.white,
-          animateButton: true,
-          foregroundWidget: Scaffold(
-              key: globalKey,
-              backgroundColor: Colors.white,
-              appBar: NeumorphicAppBar(title: Text(S.of(context).addReceipt)),
-              body: InputForm()),
-          columnWidget: StackColumnWidget(),
-          bottomWidget: BottomColumnWidget()));
+  void initState() {
+    super.initState();
+    controller = HomeController(DataReceiptRepository());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        child: AnimatedStack(
+            preventForegroundInteractions: true,
+            backgroundColor: Colors.transparent,
+            fabBackgroundColor: Colors.red,
+            buttonIcon: Icons.workspaces_filled,
+            fabIconColor: Colors.white,
+            animateButton: true,
+            foregroundWidget: Scaffold(
+                backgroundColor: Colors.white,
+                appBar: NeumorphicAppBar(title: Text(S.of(context).addReceipt)),
+                body: InputForm(controller: controller)),
+            columnWidget: StackColumnWidget(controller: controller),
+            bottomWidget: BottomColumnWidget()));
+  }
 }

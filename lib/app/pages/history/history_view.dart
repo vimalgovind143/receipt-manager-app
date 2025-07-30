@@ -29,17 +29,23 @@ import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
-class HistoryPage extends View {
+class HistoryPage extends StatefulWidget {
+  HistoryPage({Key? key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => HistoryState();
+  State<HistoryPage> createState() => HistoryState();
 }
 
-class HistoryState extends ViewState<HistoryPage, HistoryController> {
-  HistoryState() : super(HistoryController(DataReceiptRepository()));
+class HistoryState extends State<HistoryPage> {
+  late HistoryController controller;
 
-  Widget receiptVisualisation(BuildContext context) =>
-      ControlledWidgetBuilder<HistoryController>(
-          builder: (context, controller) {
+  @override
+  void initState() {
+    super.initState();
+    controller = HistoryController(DataReceiptRepository());
+  }
+
+  Widget receiptVisualisation(BuildContext context) {
         return StreamBuilder<List<ReceiptHolder>>(
             stream: controller.getReceipts(),
             builder: (context, snapshot) {
@@ -70,7 +76,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                         return FutureBuilder(
                             future: controller.getAssetImage(
                                 receipt.store.storeName,
-                                receipt.categorie.categoryName),
+                                receipt.category.categoryName),
                             builder: (context, snap) {
                               if (snapshot.hasData) {
                                 return SlidableHistoryWidget(
@@ -88,39 +94,40 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                             });
                       }));
             });
-      });
+  }
 
   @override
-  Widget get view => stacked.AnimatedStack(
-      backgroundColor: Colors.transparent,
-      fabBackgroundColor: Colors.red,
-      buttonIcon: Icons.filter_list,
-      fabIconColor: Colors.white,
-      animateButton: true,
-      foregroundWidget: Scaffold(
-          key: globalKey,
-          backgroundColor: Colors.white,
-          appBar: NeumorphicAppBar(title: Text(S.of(context).receiptOverview)),
-          body: Column(children: [receiptVisualisation(context)])),
-      columnWidget: Column(
-        children: <Widget>[
-          SizedBox(height: 20),
-          IconTile(
-            width: 60,
-            height: 60,
-            iconData: Icons.category,
-            fun: () {},
-          ),
-        ],
-      ),
-      bottomWidget: Container(
-        decoration: BoxDecoration(
-          color: Color(0xFFEFEFF4),
-          borderRadius: BorderRadius.all(
-            Radius.circular(50),
-          ),
+  Widget build(BuildContext context) {
+    return stacked.AnimatedStack(
+        backgroundColor: Colors.transparent,
+        fabBackgroundColor: Colors.red,
+        buttonIcon: Icons.filter_list,
+        fabIconColor: Colors.white,
+        animateButton: true,
+        foregroundWidget: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: NeumorphicAppBar(title: Text(S.of(context).receiptOverview)),
+            body: Column(children: [receiptVisualisation(context)])),
+        columnWidget: Column(
+          children: <Widget>[
+            SizedBox(height: 20),
+            IconTile(
+              width: 60,
+              height: 60,
+              iconData: Icons.category,
+              fun: () {},
+            ),
+          ],
         ),
-        width: 260,
-        height: 50,
-      ));
+        bottomWidget: Container(
+          decoration: BoxDecoration(
+            color: Color(0xFFEFEFF4),
+            borderRadius: BorderRadius.all(
+              Radius.circular(50),
+            ),
+          ),
+          width: 260,
+          height: 50,
+        ));
+  }
 }

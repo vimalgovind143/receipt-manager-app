@@ -24,7 +24,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+import 'package:saver_gallery/saver_gallery.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/notfifier.dart';
@@ -85,7 +85,7 @@ class HomeController extends Controller {
   }
 
   Future<void> galleryPicker() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       File image = File(pickedFile.path);
@@ -94,11 +94,15 @@ class HomeController extends Controller {
   }
 
   Future<void> cameraPicker() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
       File image = File(pickedFile.path);
-      await GallerySaver.saveImage(image.path, albumName: "ReceiptManager");
+      await SaverGallery.saveFile(
+        filePath: image.path,
+        fileName: 'receipt_${DateTime.now().millisecondsSinceEpoch}.jpg',
+        skipIfExists: false,
+      );
 
       getImageResult(image);
     }
@@ -143,7 +147,7 @@ class HomeController extends Controller {
   }
 
   Future<List<String>> getCategoryNames(String pattern) async {
-    List<Categorie> list = await this.appRepository.getCategoryNames();
+    List<Category> list = await this.appRepository.getCategoryNames();
     List<String> categoryNames = [];
     for (var category in list) {
       if (!categoryNames.contains(category.categoryName))
