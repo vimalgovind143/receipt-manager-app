@@ -21,7 +21,7 @@ import 'dart:io';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:receipt_manager/app/pages/navigator.dart';

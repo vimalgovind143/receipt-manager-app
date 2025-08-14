@@ -1,0 +1,9 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="1024" fill="#4A90E2" rx="180"/>
+  <rect x="200" y="300" width="624" height="80" fill="white" rx="10"/>
+  <rect x="200" y="420" width="624" height="80" fill="white" rx="10"/>
+  <rect x="200" y="540" width="624" height="80" fill="white" rx="10"/>
+  <rect x="200" y="660" width="400" height="80" fill="white" rx="10"/>
+  <text x="512" y="250" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="60" font-weight="bold">Receipt</text>
+  <text x="512" y="800" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="40">Manager</text>
+</svg>

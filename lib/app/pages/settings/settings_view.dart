@@ -17,7 +17,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/settings/settings_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/generated/l10n.dart';

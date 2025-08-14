@@ -17,7 +17,7 @@
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/app/widgets/scroll/scroll_widget.dart';
@@ -98,18 +98,16 @@ class InputForm extends StatelessWidget {
 
   Widget dateTextField(BuildContext context, HomeController controller) =>
       PaddingWidget(
-          widget: GestureDetector(
-              onTap: () => controller.setDate,
-              child: SimpleTextFieldWidget(
-                controller: controller.receiptDateController,
-                hintText: S.of(context).receiptDate,
-                labelText: S.of(context).receiptDate,
-                helperText: S.of(context).theReceiptDate,
-                onTap: () => controller.setDate(context),
-                icon: Icon(Icons.date_range),
-                validator: controller.validateDate,
-                readOnly: true,
-              )));
+          widget: SimpleTextFieldWidget(
+            controller: controller.receiptDateController,
+            hintText: S.of(context).receiptDate,
+            labelText: S.of(context).receiptDate,
+            helperText: S.of(context).theReceiptDate,
+            onTap: () => controller.setDate(context),
+            icon: Icon(Icons.date_range),
+            validator: controller.validateDate,
+            readOnly: true,
+          ));
 
   Widget submitButton(BuildContext context, HomeController controller) =>
       PaddingWidget(

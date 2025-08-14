@@ -21,7 +21,7 @@ import 'package:animated_stack/animated_stack.dart' as stacked;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/history/history_controller.dart';
 import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
 import 'package:receipt_manager/app/widgets/slideable/slidable_widget.dart';
@@ -99,6 +99,7 @@ class HistoryState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return stacked.AnimatedStack(
+        preventForegroundInteractions: true,
         backgroundColor: Colors.transparent,
         fabBackgroundColor: Colors.red,
         buttonIcon: Icons.filter_list,

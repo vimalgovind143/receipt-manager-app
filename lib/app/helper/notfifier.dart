@@ -16,7 +16,7 @@
  */
 
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 
 class UserNotifier {
   static void fail(String msg, BuildContext context) {

@@ -16,7 +16,7 @@
  */
 
 import 'package:flutter/services.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class SimpleTextFieldWidget extends StatelessWidget {

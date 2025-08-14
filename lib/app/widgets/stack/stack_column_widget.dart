@@ -16,7 +16,7 @@
  */
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
 

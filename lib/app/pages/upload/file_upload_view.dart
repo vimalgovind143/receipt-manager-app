@@ -21,7 +21,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/upload/upload_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';

@@ -173,7 +173,7 @@ class HomeController extends Controller {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(2030),
       initialEntryMode: DatePickerEntryMode.calendar,
     );
 

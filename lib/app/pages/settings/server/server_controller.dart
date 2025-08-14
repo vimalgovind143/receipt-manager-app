@@ -16,7 +16,7 @@
  */
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/constants.dart';
 import 'package:receipt_manager/app/helper/notfifier.dart';

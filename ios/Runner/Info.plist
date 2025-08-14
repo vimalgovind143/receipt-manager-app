@@ -40,6 +40,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
     <dict>
           <key>NSAllowsArbitraryLoads</key>
@@ -57,11 +58,14 @@
                 </dict>
            </dict>
     </dict>
-	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>CFBundleLocalizations</key>
+	<array>
+	    <string>en_US</string>
+	    <string>de_DE</string>
+	</array>
 </dict>
 </plist>
-<key>CFBundleLocalizations</key>
-<array>
-    <string>en_US</string>
-    <string>de_DE</string>
-</array>
