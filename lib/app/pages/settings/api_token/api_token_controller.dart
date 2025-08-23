@@ -19,6 +19,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/helper/notfifier.dart';
+import 'package:receipt_manager/core/logging/app_logger.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
 import '../../../constants.dart';
@@ -49,13 +50,13 @@ class ApiTokenController extends Controller {
   }
 
   @override
-  void onResumed() => print('On resumed');
+  void onResumed() => appLogger.debug('ApiTokenController: On resumed');
 
   @override
-  void onReassembled() => print('View is about to be reassembled');
+  void onReassembled() => appLogger.debug('ApiTokenController: View is about to be reassembled');
 
   @override
-  void onDeactivated() => print('View is about to be deactivated');
+  void onDeactivated() => appLogger.debug('ApiTokenController: View is about to be deactivated');
 
   @override
   void onDisposed() {

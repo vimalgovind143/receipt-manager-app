@@ -34,8 +34,9 @@ class SimpleTextFieldWidget extends StatelessWidget {
 
   final Function? getSuggestionList;
 
-  SimpleTextFieldWidget(
-      {required this.controller,
+  const SimpleTextFieldWidget(
+      {super.key,
+      required this.controller,
       required this.hintText,
       required this.helperText,
       required this.labelText,
@@ -56,7 +57,7 @@ class SimpleTextFieldWidget extends StatelessWidget {
         controller: controller,
         keyboardType: this.keyboardType,
         inputFormatters: this.inputFormatters,
-        style: TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black),
         decoration: new InputDecoration(
           border: new OutlineInputBorder(
               borderSide: new BorderSide(color: Colors.grey[100]!)),
@@ -82,7 +83,7 @@ class SimpleTextFieldWidget extends StatelessWidget {
             maxLines: 1,
             onTap: this.onTap,
             inputFormatters: this.inputFormatters,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
             decoration: new InputDecoration(
               border: new OutlineInputBorder(
                   borderSide: new BorderSide(color: Colors.grey[100]!)),
@@ -118,7 +119,7 @@ class SimpleTextFieldWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
             child: Text(
               labelText,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.redAccent,
               ),

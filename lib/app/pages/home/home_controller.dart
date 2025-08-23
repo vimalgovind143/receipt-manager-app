@@ -30,6 +30,7 @@ import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/notfifier.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
+import 'package:receipt_manager/core/logging/app_logger.dart';
 import 'package:receipt_manager/app/pages/upload/file_upload_view.dart';
 import 'package:receipt_manager/app/pages/upload/image_upload_view.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
@@ -50,13 +51,16 @@ class HomeController extends Controller {
   final picker = ImagePicker();
 
   Currency? currency;
+  final ValueNotifier<Currency?> currencyNotifier = ValueNotifier<Currency?>(null);
   DateTime? _receiptDate;
   DataReceiptRepository appRepository;
 
   HomeController(DataReceiptRepository appRepository)
       : _homePresenter = HomePresenter(),
         this.appRepository = DataReceiptRepository(),
-        super();
+        super() {
+    _initializeDefaultCurrency();
+  }
 
   Future<void> getImageResult(File image) async {
     await FlutterUploader().cancelAll();
@@ -159,13 +163,76 @@ class HomeController extends Controller {
         .toList();
   }
 
-  String? validateCategory(value) {
+  String? validateCategory(value, BuildContext context) {
     value = value.trim();
     if (value.isEmpty) {
-      return S.of(getContext()).emptyCategory;
+      return S.of(context).emptyCategory;
     }
 
     return null;
+  }
+
+  void _initializeDefaultCurrency() {
+    // Only set default currency if none is already selected
+    if (currency == null) {
+      final defaultCurrency = _getDefaultCurrencyFromLocale();
+      if (defaultCurrency != null) {
+        currency = defaultCurrency;
+        currencyNotifier.value = defaultCurrency; // Update notifier
+      }
+    }
+  }
+
+  Currency? _getDefaultCurrencyFromLocale() {
+    try {
+      final locale = Platform.localeName;
+      final countryCode = locale.split('_').length > 1 ? locale.split('_')[1] : null;
+      
+      if (countryCode != null) {
+        // Map common country codes to currencies
+        final currencyMap = {
+          'US': 'USD',
+          'GB': 'GBP', 
+          'DE': 'EUR',
+          'FR': 'EUR',
+          'IT': 'EUR',
+          'ES': 'EUR',
+          'NL': 'EUR',
+          'AT': 'EUR',
+          'BE': 'EUR',
+          'FI': 'EUR',
+          'IE': 'EUR',
+          'PT': 'EUR',
+          'GR': 'EUR',
+          'JP': 'JPY',
+          'CN': 'CNY',
+          'KR': 'KRW',
+          'IN': 'INR',
+          'CA': 'CAD',
+          'AU': 'AUD',
+          'CH': 'CHF',
+          'SE': 'SEK',
+          'NO': 'NOK',
+          'DK': 'DKK',
+          'PL': 'PLN',
+          'CZ': 'CZK',
+          'HU': 'HUF',
+          'RU': 'RUB',
+          'BR': 'BRL',
+          'MX': 'MXN',
+        };
+        
+        final currencyCode = currencyMap[countryCode.toUpperCase()];
+        if (currencyCode != null) {
+          return CurrencyService().findByCode(currencyCode);
+        }
+      }
+    } catch (e) {
+      // If there's any error getting the locale, fall back to EUR
+    }
+    
+    // Default fallback to EUR
+    return CurrencyService().findByCode('EUR');
   }
 
   void setDate(BuildContext context) async {
@@ -200,9 +267,9 @@ class HomeController extends Controller {
 
   get formKey => _formKey;
 
-  Future<void> submit() async {
+  Future<void> submit(BuildContext context) async {
     if (!_formKey.currentState!.validate()) {
-      UserNotifier.fail(S.of(getContext()).invalidInput, getContext());
+      UserNotifier.fail(S.of(context).invalidInput, context);
       refreshUI();
       return;
     }
@@ -237,29 +304,32 @@ class HomeController extends Controller {
 
     await appRepository.insertReceipt(receiptHolder);
 
+    // Clear form fields but preserve currency selection for next receipt
     _storeNameController.clear();
     _receiptTotalController.clear();
     _receiptDateController.clear();
     _receiptTagController.clear();
     _receiptCategoryController.clear();
+    _receiptDate = null; // Clear the selected date
+    // Note: we intentionally do NOT clear the currency to preserve user selection
 
-    UserNotifier.success(S.of(getContext()).addedSuccessfully, getContext());
+    UserNotifier.success(S.of(context).addedSuccessfully, context);
     refreshUI();
   }
 
-  String? validateStoreName(String value) {
+  String? validateStoreName(String value, BuildContext context) {
     value = value.trim();
     if (value.isEmpty) {
-      return S.of(getContext()).emptyStoreName;
+      return S.of(context).emptyStoreName;
     }
 
     return null;
   }
 
-  String? validateTotal(String value) {
+  String? validateTotal(String value, BuildContext context) {
     value = value.trim();
     if (value.isEmpty) {
-      return S.of(getContext()).emptyTotal;
+      return S.of(context).emptyTotal;
     }
 
     try {
@@ -268,10 +338,10 @@ class HomeController extends Controller {
     return null;
   }
 
-  String? validateDate(String value) {
+  String? validateDate(String value, BuildContext context) {
     value = value.trim();
     if (value.isEmpty || this._receiptDate == null) {
-      return S.of(getContext()).emptyReceiptDate;
+      return S.of(context).emptyReceiptDate;
     }
 
     return null;
@@ -285,19 +355,20 @@ class HomeController extends Controller {
       showCurrencyCode: true,
       onSelect: (Currency currency) {
         this.currency = currency;
-        refreshUI();
+        currencyNotifier.value = currency; // Update the ValueNotifier for reactive UI
+        refreshUI(); // This should trigger UI refresh
       },
     );
   }
 
   @override
-  void onResumed() => print('On resumed');
+  void onResumed() => appLogger.debug('HomeController: On resumed');
 
   @override
-  void onReassembled() => print('View is about to be reassembled');
+  void onReassembled() => appLogger.debug('HomeController: View is about to be reassembled');
 
   @override
-  void onDeactivated() => print('View is about to be deactivated');
+  void onDeactivated() => appLogger.debug('HomeController: View is about to be deactivated');
 
   @override
   void onDisposed() {
@@ -326,7 +397,7 @@ class HomeController extends Controller {
       _receiptDateController.text =
           DateFormat.yMMMd().format(holder.receipt.date.value);
 
-      print(results['receipt']);
+      appLogger.info('File upload result received', results['receipt']);
     }
   }
 }

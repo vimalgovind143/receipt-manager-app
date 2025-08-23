@@ -22,7 +22,7 @@ class FloatingButton extends StatelessWidget {
   final String text;
   final HomeController controller;
 
-  FloatingButton({required this.text, required this.controller});
+  const FloatingButton({super.key, required this.text, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +30,11 @@ class FloatingButton extends StatelessWidget {
         buttonColor: Colors.black,
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                shape: StadiumBorder(), shadowColor: Colors.black),
+                shape: const StadiumBorder(), shadowColor: Colors.black),
             onPressed: controller.submit,
             child: Text(
               text,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             )));
   }
 }

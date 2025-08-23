@@ -17,9 +17,6 @@
 
 import 'dart:core';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/settings/api_token/api_token_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
@@ -27,7 +24,7 @@ import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
 class ApiTokenPage extends StatefulWidget {
-  ApiTokenPage({Key? key}) : super(key: key);
+  const ApiTokenPage({Key? key}) : super(key: key);
 
   @override
   State<ApiTokenPage> createState() => ApiTokenState();
@@ -49,7 +46,7 @@ class ApiTokenState extends State<ApiTokenPage> {
         labelText: "API Token",
         helperText: "The API Token",
         validator: (value) => controller.validateApiToken(value),
-        icon: Icon(Icons.vpn_key_sharp),
+        icon: const Icon(Icons.vpn_key_sharp),
         readOnly: false,
       ));
 
@@ -63,7 +60,7 @@ class ApiTokenState extends State<ApiTokenPage> {
             ),
             onPressed: controller.submitApiToken,
             child:
-                Text("Submit", style: TextStyle(fontWeight: FontWeight.bold))),
+                Text("Submit", style: const TextStyle(fontWeight: FontWeight.bold))),
       ));
 
   @override

@@ -21,7 +21,7 @@ class PaddingWidget extends StatelessWidget {
   final Widget widget;
   final double padding;
 
-  PaddingWidget({required this.widget, this.padding = 8.0});
+  const PaddingWidget({super.key, required this.widget, this.padding = 8.0});
 
   @override
   Widget build(BuildContext context) {

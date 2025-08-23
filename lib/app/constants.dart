@@ -15,17 +15,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-final String enableHttps = "https";
-final String enableDebugOutput = "enableDebugOutput";
-final String enableTrainingData = "sendTrainingData";
-final String useLegacyParser = "legacyParser";
-final String useNeuronalNetworkParser = "neuronalNetworkParser";
-final String enableShowArticles = "showArticles";
-final String enableGaussianBlur = "gaussianBlur";
-final String enableGrayscale = "grayscaleImage";
-final String verticalImage = "rotateImage";
-final String enableLightTheme = "lightTheme";
-final String apiTokenField = "apiToken";
-final String serverDomain = "serverAddress";
-final String serverIP = "serverAddress";
-final String reverseProxyField = "reverseProxy";
+const String enableHttps = "https";
+const String enableDebugOutput = "enableDebugOutput";
+const String enableTrainingData = "sendTrainingData";
+const String useLegacyParser = "legacyParser";
+const String useNeuronalNetworkParser = "neuronalNetworkParser";
+const String enableShowArticles = "showArticles";
+const String enableGaussianBlur = "gaussianBlur";
+const String enableGrayscale = "grayscaleImage";
+const String verticalImage = "rotateImage";
+const String enableLightTheme = "lightTheme";
+const String apiTokenField = "apiToken";
+const String serverDomain = "serverAddress";
+const String serverIP = "serverAddress";
+const String reverseProxyField = "reverseProxy";

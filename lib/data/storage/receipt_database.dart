@@ -37,6 +37,7 @@ part 'receipt_database.g.dart';
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
+  @override
   int get schemaVersion => 10;
 
   @override
@@ -83,8 +84,8 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
     int tagId = await into(tags).insert(holder.tag);
     int categoryId = await into(categories).insert(holder.category);
 
-    log("Insert store id: " + storeId.toString());
-    log("Insert tag id: " + tagId.toString());
+    log("Insert store id: $storeId");
+    log("Insert tag id: $tagId");
 
     into(receipts).insert(holder.receipt.copyWith(
         storeId: Value(storeId),

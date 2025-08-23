@@ -28,7 +28,7 @@ class DataReceiptRepository extends ReceiptRepository {
 
   factory DataReceiptRepository() => _instance;
 
-  ReceiptDao _dao = ReceiptDao(AppDatabase());
+  final ReceiptDao _dao = ReceiptDao(AppDatabase());
 
   @override
   Future insertReceipt(InsertReceiptHolder receipt) =>

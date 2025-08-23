@@ -17,10 +17,13 @@
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:logger/logger.dart';
+
+final Logger _logger = Logger();
 
 class UserNotifier {
   static void fail(String msg, BuildContext context) {
-    print(msg);
+    _logger.e('User notification error: $msg');
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
       backgroundColor: Colors.red,
@@ -28,7 +31,7 @@ class UserNotifier {
   }
 
   static void success(String msg, BuildContext context) {
-    print(msg);
+    _logger.i('User notification success: $msg');
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
       backgroundColor: Colors.green,

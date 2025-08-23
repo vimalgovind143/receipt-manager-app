@@ -23,7 +23,7 @@ class StatsCard extends StatelessWidget {
   final String statsSubTitle;
   final Widget widget;
 
-  StatsCard(this.statsTitle, this.statsSubTitle, this.widget);
+  const StatsCard(this.statsTitle, this.statsSubTitle, this.widget, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class StatsCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           statsTitle,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black87,
                               fontSize: 24,
                               fontWeight: FontWeight.bold),
@@ -55,7 +55,7 @@ class StatsCard extends StatelessWidget {
                         ),
                         Text(
                           statsSubTitle,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18,
                               color: Colors.black,
                               fontWeight: FontWeight.w300),

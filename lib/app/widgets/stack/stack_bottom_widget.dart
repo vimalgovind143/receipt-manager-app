@@ -18,9 +18,11 @@
 import 'package:flutter/cupertino.dart';
 
 class BottomColumnWidget extends StatelessWidget {
+  const BottomColumnWidget({super.key});
+
   @override
   Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xFFEFEFF4),
           borderRadius: BorderRadius.all(
             Radius.circular(50),

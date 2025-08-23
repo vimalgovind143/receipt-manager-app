@@ -15,7 +15,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
@@ -24,11 +23,35 @@ import 'package:receipt_manager/app/widgets/scroll/scroll_widget.dart';
 import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
-class InputForm extends StatelessWidget {
+class InputForm extends StatefulWidget {
   final HomeController controller;
 
   InputForm({required this.controller});
+
+  @override
+  _InputFormState createState() => _InputFormState();
+}
+
+class _InputFormState extends State<InputForm> {
   final ScrollController _scrollController = ScrollController();
+  late VoidCallback _controllerListener;
+
+  @override
+  void initState() {
+    super.initState();
+    // Create a listener that rebuilds this widget when controller changes
+    _controllerListener = () {
+      if (mounted) {
+        setState(() {});
+      }
+    };
+    // Note: We'll connect this listener in the controller's currencyPicker method
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   Widget storeNameTextField(BuildContext context, HomeController controller) =>
       PaddingWidget(
@@ -37,10 +60,10 @@ class InputForm extends StatelessWidget {
               hintText: S.of(context).storeName,
               labelText: S.of(context).storeName,
               helperText: S.of(context).theReceiptStoreName,
-              validator: controller.validateStoreName,
+              validator: (value) => controller.validateStoreName(value!, context),
               getSuggestionList: controller.getStoreNames,
               readOnly: false,
-              icon: Icon(Icons.store_mall_directory_outlined)));
+              icon: const Icon(Icons.store_mall_directory_outlined)));
 
   Widget tagTextField(BuildContext context, HomeController controller) =>
       ScrollWidget(
@@ -52,7 +75,7 @@ class InputForm extends StatelessWidget {
             helperText: S.of(context).theReceiptTag,
             validator: (value) => null,
             getSuggestionList: controller.getTagNames,
-            icon: Icon(Icons.tag),
+            icon: const Icon(Icons.tag),
             readOnly: false,
           )),
           controller: _scrollController);
@@ -70,27 +93,32 @@ class InputForm extends StatelessWidget {
                     hintText: S.of(context).receiptTotal,
                     labelText: S.of(context).receiptTotal,
                     helperText: S.of(context).theReceiptTotal,
-                    icon: Icon(Icons.monetization_on_outlined),
-                    validator: controller.validateTotal,
-                    inputFormatters: [MoneyInputFormatter()],
+                    icon: const Icon(Icons.monetization_on_outlined),
+                    validator: (value) => controller.validateTotal(value!, context),
+                    inputFormatters: [CurrencyInputFormatter()],
                     keyboardType: TextInputType.number,
                     readOnly: false,
                   ),
                   controller: _scrollController)),
           PaddingWidget(
-            widget: NeumorphicButton(
-              onPressed: () => controller.currencyPicker(context),
-              style: NeumorphicStyle(
-                  color: Colors.grey[200],
-                  shape: NeumorphicShape.flat,
-                  boxShape: NeumorphicBoxShape.stadium(),
-                  border: NeumorphicBorder(width: 2, color: Colors.green)),
-              child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    controller.currency?.code ?? "EUR",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
+            widget: ValueListenableBuilder(
+              valueListenable: controller.currencyNotifier,
+              builder: (context, currency, child) {
+                return NeumorphicButton(
+                  onPressed: () => controller.currencyPicker(context),
+                  style: NeumorphicStyle(
+                      color: Colors.grey[200],
+                      shape: NeumorphicShape.flat,
+                      boxShape: NeumorphicBoxShape.stadium(),
+                      border: NeumorphicBorder(width: 2, color: Colors.green)),
+                  child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        currency?.code ?? controller.currency?.code ?? "EUR",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                );
+              },
             ),
           )
         ],
@@ -104,8 +132,8 @@ class InputForm extends StatelessWidget {
             labelText: S.of(context).receiptDate,
             helperText: S.of(context).theReceiptDate,
             onTap: () => controller.setDate(context),
-            icon: Icon(Icons.date_range),
-            validator: controller.validateDate,
+            icon: const Icon(Icons.date_range),
+            validator: (value) => controller.validateDate(value!, context),
             readOnly: true,
           ));
 
@@ -114,13 +142,13 @@ class InputForm extends StatelessWidget {
           widget: Align(
         alignment: Alignment.centerLeft,
         child: NeumorphicButton(
-            onPressed: () => controller.submit(),
+            onPressed: () => controller.submit(context),
             style: NeumorphicStyle(
               shape: NeumorphicShape.flat,
               boxShape: NeumorphicBoxShape.stadium(),
             ),
             child: Text(S.of(context).submit,
-                style: TextStyle(fontWeight: FontWeight.bold))),
+                style: const TextStyle(fontWeight: FontWeight.bold))),
       ));
 
   Widget categoryTextFormat(BuildContext context, HomeController controller) =>
@@ -131,8 +159,8 @@ class InputForm extends StatelessWidget {
             hintText: S.of(context).receiptCategory,
             labelText: S.of(context).receiptCategory,
             helperText: S.of(context).theReceiptCategory,
-            icon: Icon(Icons.category),
-            validator: controller.validateCategory,
+            icon: const Icon(Icons.category),
+            validator: (value) => controller.validateCategory(value, context),
             getSuggestionList: controller.getCategoryNames,
             readOnly: false,
           )),
@@ -143,16 +171,16 @@ class InputForm extends StatelessWidget {
     return SingleChildScrollView(
         controller: _scrollController,
         child: Form(
-          key: controller.formKey,
+          key: widget.controller.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              storeNameTextField(context, controller),
-              totalTextField(context, controller),
-              dateTextField(context, controller),
-              tagTextField(context, controller),
-              categoryTextFormat(context, controller),
-              submitButton(context, controller)
+              storeNameTextField(context, widget.controller),
+              totalTextField(context, widget.controller),
+              dateTextField(context, widget.controller),
+              tagTextField(context, widget.controller),
+              categoryTextFormat(context, widget.controller),
+              submitButton(context, widget.controller)
             ],
           ),
         ));

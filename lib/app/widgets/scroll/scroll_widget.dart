@@ -22,7 +22,7 @@ class ScrollWidget extends StatelessWidget {
   final Widget widget;
   final ScrollController controller;
 
-  const ScrollWidget({required this.widget, required this.controller});
+  const ScrollWidget({super.key, required this.widget, required this.controller});
 
   @override
   Widget build(BuildContext context) {

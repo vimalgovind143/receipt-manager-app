@@ -17,9 +17,6 @@
 
 import 'dart:core';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/settings/server/server_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
@@ -27,7 +24,7 @@ import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
 class ServerSettingsPage extends StatefulWidget {
-  ServerSettingsPage({Key? key}) : super(key: key);
+  const ServerSettingsPage({Key? key}) : super(key: key);
 
   @override
   State<ServerSettingsPage> createState() => ServerSettingsState();
@@ -49,7 +46,7 @@ class ServerSettingsState extends State<ServerSettingsPage> {
         labelText: "Server Address",
         helperText: "The Server Address",
         validator: (value) => controller.validateServerAddress(value),
-        icon: Icon(Icons.wifi),
+        icon: const Icon(Icons.wifi),
         readOnly: false,
       ));
 
@@ -63,7 +60,7 @@ class ServerSettingsState extends State<ServerSettingsPage> {
             ),
             onPressed: controller.submitServerController,
             child:
-                Text("Submit", style: TextStyle(fontWeight: FontWeight.bold))),
+                Text("Submit", style: const TextStyle(fontWeight: FontWeight.bold))),
       ));
 
   @override

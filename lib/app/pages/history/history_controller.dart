@@ -18,6 +18,7 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/history/history_presenter.dart';
+import 'package:receipt_manager/core/logging/app_logger.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
@@ -75,13 +76,13 @@ class HistoryController extends Controller {
   void buttonPressed() {}
 
   @override
-  void onResumed() => print('On resumed');
+  void onResumed() => appLogger.debug('HistoryController: On resumed');
 
   @override
-  void onReassembled() => print('View is about to be reassembled');
+  void onReassembled() => appLogger.debug('HistoryController: View is about to be reassembled');
 
   @override
-  void onDeactivated() => print('View is about to be deactivated');
+  void onDeactivated() => appLogger.debug('HistoryController: View is about to be deactivated');
 
   @override
   void onDisposed() {

@@ -15,4 +15,4 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-final int receiptManagerApiPort = 8721;
+const int receiptManagerApiPort = 8721;

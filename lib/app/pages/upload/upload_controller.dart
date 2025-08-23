@@ -22,6 +22,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/constants.dart';
+import 'package:receipt_manager/core/logging/app_logger.dart';
 import 'package:receipt_manager/app/helper/notfifier.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
@@ -60,13 +61,13 @@ class UploadController extends Controller {
   }
 
   @override
-  void onResumed() => print('On resumed');
+  void onResumed() => appLogger.debug('UploadController: On resumed');
 
   @override
-  void onReassembled() => print('View is about to be reassembled');
+  void onReassembled() => appLogger.debug('UploadController: View is about to be reassembled');
 
   @override
-  void onDeactivated() => print('View is about to be deactivated');
+  void onDeactivated() => appLogger.debug('UploadController: View is about to be deactivated');
 
   @override
   void onDisposed() {

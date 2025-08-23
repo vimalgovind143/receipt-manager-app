@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/constants.dart';
+import 'package:receipt_manager/core/logging/app_logger.dart';
 import 'package:receipt_manager/app/pages/settings/api_token/api_token_view.dart';
 import 'package:receipt_manager/app/pages/settings/server/server_view.dart';
 import 'package:receipt_manager/app/pages/settings/settings_presenter.dart';
@@ -83,13 +84,13 @@ class SettingsController extends Controller {
   }
 
   @override
-  void onResumed() => print('On resumed');
+  void onResumed() => appLogger.debug('SettingsController: On resumed');
 
   @override
-  void onReassembled() => print('View is about to be reassembled');
+  void onReassembled() => appLogger.debug('SettingsController: View is about to be reassembled');
 
   @override
-  void onDeactivated() => print('View is about to be deactivated');
+  void onDeactivated() => appLogger.debug('SettingsController: View is about to be deactivated');
 
   @override
   void onDisposed() {

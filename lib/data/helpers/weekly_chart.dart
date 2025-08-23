@@ -26,19 +26,19 @@ class WeeklyOverview {
   DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
 
   List<WeeklyChartData> getData() {
-    DateTime _today = DateTime.now();
-    DateTime _start = _today.subtract(new Duration(days: _today.weekday));
+    DateTime today = DateTime.now();
+    DateTime start = today.subtract(Duration(days: today.weekday));
     final List<WeeklyChartData> chartData = [];
 
     for (int i = 1; i < 8; i++) {
-      DateTime date = DateTime(_start.year, _start.month, _start.day + i);
+      DateTime date = DateTime(start.year, start.month, start.day + i);
       chartData.add(WeeklyChartData(date, 0));
     }
 
     for (ReceiptHolder holder in receipts) {
       final Receipt receipt = holder.receipt;
       for (int i = 0; i < 7; i++) {
-        var d = new DateTime(_start.year, _start.month, _start.day + i);
+        var d = DateTime(start.year, start.month, start.day + i);
         if (receipt.date.year == d.year &&
             receipt.date.month == d.month &&
             receipt.date.day == d.day) {

@@ -22,46 +22,49 @@ import 'dart:io';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart' as pathProvider;
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:receipt_manager/app/pages/navigator.dart';
+import 'package:receipt_manager/core/logging/app_logger.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 void main() async {
   return runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     FlutterCleanArchitecture.debugModeOn();
-    Directory directory = await pathProvider.getApplicationDocumentsDirectory();
+    Directory directory = await path_provider.getApplicationDocumentsDirectory();
     Hive.init(directory.path);
-    runApp(ReceiptManagerApp());
+    runApp(const ProviderScope(child: ReceiptManagerApp()));
   }, (error, stack) {
-    print(stack);
-    print(error);
+    appLogger.error('Unhandled error: $error', error, stack);
   });
 }
 
 class ReceiptManagerApp extends StatelessWidget {
+  const ReceiptManagerApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return NeumorphicApp(
-        localizationsDelegates: [
+        localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: [
-          const Locale('de', ''),
-          const Locale('en', ''),
+        supportedLocales: const [
+          Locale('de', ''),
+          Locale('en', ''),
         ],
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
-        theme: NeumorphicThemeData(
+        theme: const NeumorphicThemeData(
             defaultTextColor: Color(0xFF303E57),
             accentColor: Colors.red,
             baseColor: Color(0xFFF8F9FC),
             depth: 10,
             lightSource: LightSource.topRight),
-        home: NavigatorPage());
+        home: const NavigatorPage());
   }
 }

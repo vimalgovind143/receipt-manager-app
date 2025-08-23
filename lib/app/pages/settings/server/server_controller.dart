@@ -20,6 +20,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/constants.dart';
 import 'package:receipt_manager/app/helper/notfifier.dart';
+import 'package:receipt_manager/core/logging/app_logger.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
 import 'server_presenter.dart';
@@ -62,13 +63,13 @@ class ServerSettingsController extends Controller {
   }
 
   @override
-  void onResumed() => print('On resumed');
+  void onResumed() => appLogger.debug('ServerSettingsController: On resumed');
 
   @override
-  void onReassembled() => print('View is about to be reassembled');
+  void onReassembled() => appLogger.debug('ServerSettingsController: View is about to be reassembled');
 
   @override
-  void onDeactivated() => print('View is about to be deactivated');
+  void onDeactivated() => appLogger.debug('ServerSettingsController: View is about to be deactivated');
 
   @override
   void onDisposed() {
@@ -84,16 +85,16 @@ class ServerSettingsController extends Controller {
     }
 
     String serverAddress = serverSettingController.text.trim();
-    print(serverAddress);
+    appLogger.info('Server address validation', {'serverAddress': serverAddress});
 
     if (ipRegex.hasMatch(serverAddress)) {
       settingsBox.put(serverDomain, serverAddress);
       settingsBox.put(reverseProxyField, false);
-      print("Use domain");
+      appLogger.info('Using domain configuration');
     } else {
       settingsBox.put(serverIP, serverAddress);
       settingsBox.put(reverseProxyField, true);
-      print("Use IP");
+      appLogger.info('Using IP configuration');
     }
 
     UserNotifier.success("Server IP is valid", getContext());

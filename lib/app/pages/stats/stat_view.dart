@@ -15,12 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:receipt_manager/app/pages/stats/stat_controller.dart';
 import 'package:receipt_manager/app/widgets/stats/stats_card.dart';
 import 'package:receipt_manager/data/helpers/category_chart.dart';
@@ -33,7 +30,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatsPage extends StatefulWidget {
-  StatsPage({Key? key}) : super(key: key);
+  const StatsPage({Key? key}) : super(key: key);
 
   @override
   State<StatsPage> createState() => StatsState();
@@ -57,7 +54,7 @@ class StatsState extends State<StatsPage> {
 
     int year = DateTime.now().year;
     return SfCartesianChart(
-        primaryXAxis: CategoryAxis(),
+        primaryXAxis: const CategoryAxis(),
         tooltipBehavior: monthToolTip,
         series: <CartesianSeries<ReceiptMonthData, String>>[
           LineSeries<ReceiptMonthData, String>(
@@ -76,7 +73,7 @@ class StatsState extends State<StatsPage> {
     int year = DateTime.now().year;
 
     return SfCartesianChart(
-        primaryXAxis: CategoryAxis(),
+        primaryXAxis: const CategoryAxis(),
         tooltipBehavior: weekToolTip,
         series: <CartesianSeries<WeeklyChartData, String>>[
           ColumnSeries<WeeklyChartData, String>(
@@ -97,7 +94,7 @@ class StatsState extends State<StatsPage> {
 
     if (data.isEmpty) return Container();
     return SfCircularChart(
-        legend: Legend(isVisible: true),
+        legend: const Legend(isVisible: true),
         tooltipBehavior: categoryToolTip,
         series: <CircularSeries>[
           PieSeries<CategoryData, String>(

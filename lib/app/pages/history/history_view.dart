@@ -18,9 +18,6 @@
 import 'dart:core';
 
 import 'package:animated_stack/animated_stack.dart' as stacked;
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/history/history_controller.dart';
 import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
@@ -30,7 +27,7 @@ import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 class HistoryPage extends StatefulWidget {
-  HistoryPage({Key? key}) : super(key: key);
+  const HistoryPage({Key? key}) : super(key: key);
 
   @override
   State<HistoryPage> createState() => HistoryState();
@@ -73,12 +70,12 @@ class HistoryState extends State<HistoryPage> {
                       itemCount: receipts.length,
                       itemBuilder: (_, index) {
                         final receipt = receipts[index];
-                        return FutureBuilder(
+                        return FutureBuilder<Image?>(
                             future: controller.getAssetImage(
                                 receipt.store.storeName,
                                 receipt.category.categoryName),
                             builder: (context, snap) {
-                              if (snapshot.hasData) {
+                              if (snap.hasData && snap.data != null) {
                                 return SlidableHistoryWidget(
                                     deleteText: S.of(context).delete,
                                     deleteMethod: () =>
@@ -86,10 +83,10 @@ class HistoryState extends State<HistoryPage> {
                                     editText: S.of(context).edit,
                                     editMethod: () =>
                                         controller.editMethod(receipt, context),
-                                    image: snap.data as Image,
+                                    image: snap.data!,
                                     holder: receipt);
                               } else {
-                                return CircularProgressIndicator();
+                                return const CircularProgressIndicator();
                               }
                             });
                       }));
@@ -111,7 +108,7 @@ class HistoryState extends State<HistoryPage> {
             body: Column(children: [receiptVisualisation(context)])),
         columnWidget: Column(
           children: <Widget>[
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             IconTile(
               width: 60,
               height: 60,
@@ -121,7 +118,7 @@ class HistoryState extends State<HistoryPage> {
           ],
         ),
         bottomWidget: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color(0xFFEFEFF4),
             borderRadius: BorderRadius.all(
               Radius.circular(50),
