@@ -67,5 +67,11 @@
 	    <string>en_US</string>
 	    <string>de_DE</string>
 	</array>
+	<!-- AdMob App ID (Test ID - replace with your actual ID) -->
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<!-- App Tracking Transparency -->
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This app uses advertising ID to provide personalized ads and improve your experience.</string>
 </dict>
 </plist>

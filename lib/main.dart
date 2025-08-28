@@ -27,14 +27,25 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:receipt_manager/app/pages/navigator.dart';
 import 'package:receipt_manager/core/logging/app_logger.dart';
+import 'package:receipt_manager/core/monetization/firebase_service.dart';
+import 'package:receipt_manager/core/monetization/ad_manager.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 void main() async {
   return runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     FlutterCleanArchitecture.debugModeOn();
+    
+    // Initialize Firebase
+    await FirebaseService.initialize();
+    
+    // Initialize Google Mobile Ads
+    await AdManager.initialize();
+    
+    // Initialize Hive
     Directory directory = await path_provider.getApplicationDocumentsDirectory();
     Hive.init(directory.path);
+    
     runApp(const ProviderScope(child: ReceiptManagerApp()));
   }, (error, stack) {
     appLogger.error('Unhandled error: $error', error, stack);

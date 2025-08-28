@@ -54,6 +54,17 @@ dependencies:
   freezed_annotation: ^2.4.2
   json_annotation: ^4.9.0
 
+  # Firebase dependencies for monetization
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
+  cloud_firestore: ^4.13.6
+  firebase_analytics: ^10.7.4
+  firebase_storage: ^11.6.0
+  
+  # Monetization dependencies
+  google_mobile_ads: ^5.0.0
+  in_app_purchase: ^3.1.11
+
   flutter_localizations:
     sdk: flutter
 dev_dependencies:
