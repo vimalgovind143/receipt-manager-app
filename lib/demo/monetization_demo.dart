@@ -82,7 +82,7 @@ class MonetizationDemoPage extends ConsumerWidget {
   }
 
   Widget _buildFeatureCard(String title, List<String> features, Color backgroundColor) {
-    return NeumorphicContainer(
+    return Neumorphic(
       style: NeumorphicStyle(
         depth: 2,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),

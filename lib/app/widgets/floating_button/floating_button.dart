@@ -31,7 +31,7 @@ class FloatingButton extends StatelessWidget {
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(), shadowColor: Colors.black),
-            onPressed: controller.submit,
+            onPressed: () => controller.submit(context),
             child: Text(
               text,
               style: const TextStyle(color: Colors.white),

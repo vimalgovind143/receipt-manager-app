@@ -19,7 +19,7 @@ class _PremiumUpgradeDialogState extends ConsumerState<PremiumUpgradeDialog> {
     final purchaseManager = ref.watch(purchaseManagerProvider);
     final removeAdsProduct = purchaseManager.removeAdsProduct;
 
-    return NeumorphicAlertDialog(
+    return AlertDialog(
       title: const Text(
         '🚀 Upgrade to Premium',
         style: TextStyle(
@@ -182,7 +182,7 @@ class _PremiumUpgradeDialogState extends ConsumerState<PremiumUpgradeDialog> {
   void _showSuccessDialog() {
     showDialog(
       context: context,
-      builder: (context) => NeumorphicAlertDialog(
+      builder: (context) => AlertDialog(
         title: const Text('🎉 Welcome to Premium!'),
         content: const Text(
           'Thank you for upgrading! You now have access to all premium features.',
@@ -200,7 +200,7 @@ class _PremiumUpgradeDialogState extends ConsumerState<PremiumUpgradeDialog> {
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder: (context) => NeumorphicAlertDialog(
+      builder: (context) => AlertDialog(
         title: const Text('Purchase Error'),
         content: Text(message),
         actions: [

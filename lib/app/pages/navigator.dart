@@ -17,10 +17,10 @@
 
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
-import 'package:receipt_manager/app/pages/history/history_view.dart';
+import 'package:receipt_manager/app/pages/history/history_view_riverpod.dart';
 import 'package:receipt_manager/app/pages/home/home_view.dart';
-import 'package:receipt_manager/app/pages/settings/settings_view.dart';
-import 'package:receipt_manager/app/pages/stats/stat_view.dart';
+import 'package:receipt_manager/app/pages/settings/settings_view_riverpod.dart';
+import 'package:receipt_manager/app/pages/stats/stats_view_riverpod.dart';
 
 class NavigatorPage extends StatefulWidget {
   const NavigatorPage({Key? key}) : super(key: key);
@@ -34,10 +34,12 @@ class NavigatorState extends State<NavigatorPage> {
   final List<Widget> _children = [
     // Temporarily use original version until Riverpod migration is complete
     HomePage(),
+    // Migrated to Riverpod
+    const HistoryPageRiverpod(),
     // Keep legacy versions for now (to be migrated)
-    HistoryPage(),
-    StatsPage(),
-    SettingsPage()
+    const StatsPageRiverpod(),
+    // Migrated to Riverpod
+    const SettingsPageRiverpod()
   ];
 
   Widget navigatorWidget(icon) => Icon(icon, color: Colors.black, size: 30);

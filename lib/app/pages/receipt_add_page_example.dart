@@ -122,7 +122,7 @@ class _ReceiptAddPageExampleState extends ConsumerState<ReceiptAddPageExample> {
     bool readOnly = false,
     VoidCallback? onTap,
   }) {
-    return NeumorphicContainer(
+    return Neumorphic(
       style: NeumorphicStyle(
         depth: -2,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
@@ -149,7 +149,7 @@ class _ReceiptAddPageExampleState extends ConsumerState<ReceiptAddPageExample> {
   }
 
   Widget _buildImagePickerSection() {
-    return NeumorphicContainer(
+    return Neumorphic(
       style: NeumorphicStyle(
         depth: -2,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
@@ -260,7 +260,7 @@ class _ReceiptAddPageExampleState extends ConsumerState<ReceiptAddPageExample> {
   void _showFeatureDialog(String message) {
     showDialog(
       context: context,
-      builder: (context) => NeumorphicAlertDialog(
+      builder: (context) => AlertDialog(
         title: const Text('Feature Demo'),
         content: Text(message),
         actions: [
